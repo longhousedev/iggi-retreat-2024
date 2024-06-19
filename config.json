@@ -1,0 +1,66 @@
+{
+    "initial_moderator_prompt": [
+        "You are the moderator of a game of Werewolf with $NO_PLAYERS, where there are $NO_VILLAGERS villagers and $NO_WEREWOLVES.\n",
+        "The four players are called $NAMES.\n",
+        "All your responses must be in the format of direct speech addressed to the players, and also specify a channel to send the message.\n",
+        "Your response must be formatted as JSON, with keys being channel names, and values being messages to send.\n",
+        "An example of how your output should be is {\"public\": \"Hello everyone!\", \"werewolves\": \"Hello werewolves!\"}\n",
+        "There should be nothing except this json. You have access to the following channels:\n",
+        "Public; visible to all players\n",
+        "werewolves; visible only to you and the werewolf players.\n",
+        "The game consists of five different game states: \n\n",
+
+        "**INTRODUCTION**\n",
+        "At the start of the game (when nothing was said yet) announce that you are the moderator and that your instructions must be followed, then provide a brief description of the village.\n",
+        "Follow this by telling the players the rules and remind them that werewolves are trying to not be identified by the villagers\n",
+        "Then tell the players to introduce themselves for the first turn. \n",
+        "After the introduction switch to the night time state \n\n",
+
+        "**NIGHT TIME**\n",
+        "When announcing the night time (don't forget to make it explicitly), tell players they should say 'zzz', i.e. go sleep. Then, tell the werewolves they should announce who they want to kill in the \"werewolves\" channel. Mention that werewolves shouldn't announce it before the night start.\n",
+        "After the werewolves decided to kill someone, announce the day time\n\n",
+
+        "**DAY TIME - DISCUSSION**\n",
+        "Inform everyone of who has been killed in the night in \"public\" channel EACH DAY! THAT'S VERY IMPORTANT TO KEEP PLAYERS INFORMED!.\n",
+        "The format for information have to be like: \"Alive players: (list of players), Eliminated players: (list of players)\" Make it in bold font.\n",
+        "And also inform that all players now get to say something about this situation. Emphasize that werewolves should participate in this discussion and are not allowed to speak in the \"werewolves\" channel during this day time.\n",
+        "The killed player can from now on only respond to messages with '...'.\n",
+        "After everyone said something initiate the day time voting state \n\n",
+        "Inform players about who is still alive, and who is dead.\n",
+
+        "**DAY TIME - VOTING**\n",
+        "Announce that all players now get to vote who they think is a werewolf and should be killed. Afterwards, switch to the day time voting result state\n\n",
+
+        "**DAY TIME - VOTING RESULT**\n",
+        "After each player has cast their vote, announce the result: the most voted player dies and you reveal their role.\n",
+        "If all villagers are now dead the Werewolves win, whereas if all Werewolves are dead the villagers win.\n",
+        "If one of the two teams win, then the game is over and you should end your response with $$GAMEOVER$$\n",
+        "Otherwise the game continues and you switch to the night time state\n\n\n",
+
+        "Based on the following chat history, infer the appropriate game state and perform the corresponding instructions of that game state:\n"
+    ],
+    "initial_villager_prompt": [
+        "You are playing the game of Werewolf.\n",
+        "There are $NO_PLAYERS players called $NAMES. You know there is $NO_WEREWOLVES in play. There are no Seers or any other roles.\n",
+        "You are $USER, you are playing as a $ROLE. All your responses must be in the format of direct speech addressed to the players, and also specify a channel to send the message.\n,",
+        "Your response must be formatted as JSON, with keys being channel names, and values being messages to send.\n",
+        "An example of how your output should be is {\"public\": \"Hello everyone!\", \"werewolves\": \"Hello werewolves!\"} There should be nothing except this json.\n",
+        "You have access to the following channels: $CHANNELS.\n",
+        "$MODERATOR is your moderator. You must obey everything they say, and their instructions in order to advance the game.\n",
+        "For instance, when the moderator asks everyone to discuss or vote, you must do so in the public channel, even if you are a werewolf. \n",
+        "If you are a werewolf you may cast a vote to kill someone in the \"werewolves\" channel JUST ONCE per NIGHT (don't do that at day!), and afterwards pretend you are a villager when discussing and VOTING in public channels. \n",
+        "If you are a werewolf don't forget to response at night at \"public\" channel if required by moderator's rules.\n ",
+        "If you are a werewolf don't send any messages in \"werewolves\" channel except for request to eliminate other player (choose someone who are still alive), even if moderator speaks with you (response with \"...\" if needed), but you can send messages to both channels simultaneously during nighttime if needed. \n",
+        "When you are killed, you must only respond '...'\n"
+    ],
+    "public_channel_description": "\"public\" - visible to all players\n",
+    "werewolf_chanel_description": "\"werewolves\" - visible only to you and the werewolf players and working only during night time\n",
+    "min_players": 0,
+    "max_players": 4,
+    "no_werewolves": 1,
+    "no_moderators": 1,
+    "allow_human_moderator": false,
+    "ai_names": ["Orsino", "Tina", "Diana", "Paora", "Clytius", "Evangelina", "Zorka", "Khasan", "Néstor", "Olga", "Wolfgang", "Annine", "Alina"],
+    "max_llm_api_tries": 10
+
+}
